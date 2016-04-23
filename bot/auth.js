@@ -1,11 +1,11 @@
 var ddp = require('ddp');
-var ddpclient = new ddp({ host : "10.10.107.39" });
 var login = require('ddp-login');
 var fs = require('fs');
 var q = require('q');
 var readline = require('readline');
 
 module.exports = function(ddpOptions) {
+  var ddpclient = new ddp(ddpOptions);
   return q.ninvoke(ddpclient, 'connect')
     .then(function(wasReconnect){
       if (wasReconnect) { 
@@ -25,8 +25,9 @@ module.exports = function(ddpOptions) {
         })
         // Save token
         .then(userInfo.save)
-        .fail(function(e){console.error("", e)})
-    });
+        .fail(function(e){console.error(e)})
+    })
+    .then(q(ddpclient));
 }
 
 
