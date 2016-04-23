@@ -8,6 +8,7 @@ body {
 	padding: 0;
 	margin: 0;
 	height: 100%;
+    background: #e6e6e6;
 }
 
 #nav {
@@ -23,17 +24,22 @@ body {
 #nav img {
 	vertical-align: middle;
 	height: 54px;
-	padding: 12px 0;
+	padding: 0 0 12px 0;
 }
 
 h1 {
 	font-family: "intel-clear-headline",impact,sans-serif;
     line-height: .9;
     letter-spacing: .029em;
-    font-size: 4.7em;
+    font-size: 4.4em;
     font-weight: 200;
-    text-align: center;
     margin: 3px 0;
+    float: left;
+}
+#nav span {
+	float:right;
+	font-family: "intel-clear-headline",impact,sans-serif;
+	font-size: 3em;
 }
 
 h2 {
@@ -42,30 +48,35 @@ h2 {
 }
 
 h2 + p {
-	margin-top: 0;
+	margin: 0;
 	font-size: 2em;
 }
 
 .devices {
-	display: flex;
-    justify-content: space-around;
     margin: 0 3em;
     position: absolute;
     top: 110px;
-    bottom: 40px;
     left: 0;
     right: 0;
+	display: flex;
+    justify-content: space-around;
 }
-
+.deviceholder {
+	max-width: 30%;
+}
 .device {
 	flex: 1;
 	margin: 2em 0;
 	padding: 1.5em;
 	border: 6px solid #eee;
 	border-radius: 3em;
-	max-width: 30%;
 	text-align: center;
 	max-height: 80%;
+	width: 100%;
+	background-color: #fff;
+	box-shadow:0px 0px 33px -10px #000;
+	position: relative;
+	z-index: 10;
 }
 
 .device.new { 
@@ -74,7 +85,73 @@ h2 + p {
 
 .device img {
 	border-radius: 2em;
-	max-width: 10em;
+	max-width: 12em;
+}
+.active-icon {
+	display: inline-block;
+	width:8px;
+	height: 8px;
+	background: green;
+	border-radius: 8px;
+}
+.message {
+	display: block;
+	border-radius: 3em;
+	position: relative;
+	z-index: 1;
+	background: #fff;
+	border: 6px solid #eee;
+	padding: 0.9em 1.5em 0.5em;
+    margin-top: 54px;
+    width: 100%;
+	box-shadow:0px 0px 33px -10px #000;
+	visibility: hidden;
+}
+.message.show {
+	visibility: visible;
+}
+.message:after, .message:before {
+	bottom: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.message:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-bottom-color: #fff;
+	border-width: 30px;
+	margin-left: -30px;
+
+}
+.message:before {
+	border-color: rgba(238, 238, 238, 0);
+	border-bottom-color: #eee;
+	border-width: 38px;
+	margin-left: -38px;
+}
+.message h3 {
+	font-size: 1.5em;
+	margin: 0;
+	font-weight: 100;
+}
+.message p {
+	font-size: 3em;
+	margin: 0;
+}
+
+#footer {
+	width:100%;
+	padding: 6px 0;
+	bottom: 0;
+	position: fixed;
+	text-align: center;
+	background-color: #0071c5;
+	color: #fff;
 }
 
 @font-face{font-family:"intel-clear";src:url("Fonts/intel-clear-latin.eot");src:url("Fonts/intel-clear-latin.eot?#iefix") format("embedded-opentype"),url('Fonts/intel-clear-latin.woff') format('woff'),url('Fonts/intel-clear-latin.ttf') format('truetype');font-weight:normal;font-style:normal}
@@ -85,3 +162,106 @@ h2 + p {
 @font-face{font-family:"intel-clear";src:url("Fonts/intel-clear-latin-lite-italic.eot");src:url("Fonts/intel-clear-latin-lite-italic.eot?#iefix") format("embedded-opentype"),url("Fonts/intel-clear-latin-lite-italic.woff") format("woff"),url("Fonts/intel-clear-latin-lite-italic.ttf") format("truetype");font-weight:200;font-style:italic}
 @font-face{font-family:"intel-clear-headline";src:url("Fonts/intel-clear-headline.eot");src:url("Fonts/intel-clear-headline.eot?#iefix") format("embedded-opentype"),url("Fonts/intel-clear-headline.woff") format("woff"),url("Fonts/intel-clear-headline.ttf") format("truetype");font-weight:400;font-style:normal}
 @font-face{font-family:'Glyphicons Halflings';src:url('Fonts/glyphicons-halflings-regular.eot');src:url('Fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),url('Fonts/glyphicons-halflings-regular.woff') format('woff'),url('Fonts/glyphicons-halflings-regular.ttf') format('truetype'),url('Fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg')}
+
+
+/*
+==============================================
+CSS3 ANIMATION CHEAT SHEET
+==============================================
+
+Made by Justin Aguilar
+
+www.justinaguilar.com/animations/
+
+Questions, comments, concerns, love letters:
+justin@justinaguilar.com
+==============================================
+*/
+
+/*
+==============================================
+slideDown
+==============================================
+*/
+
+
+.slideDown{
+	animation-name: slideDown;
+	-webkit-animation-name: slideDown;	
+
+	animation-duration: 1s;	
+	-webkit-animation-duration: 1s;
+
+	animation-timing-function: ease;	
+	-webkit-animation-timing-function: ease;	
+
+	visibility: visible !important;						
+}
+
+@keyframes slideDown {
+	0% {
+		transform: translateY(-100%);
+	}
+	50%{
+		transform: translateY(8%);
+	}
+	65%{
+		transform: translateY(-4%);
+	}
+	80%{
+		transform: translateY(4%);
+	}
+	95%{
+		transform: translateY(-2%);
+	}			
+	100% {
+		transform: translateY(0%);
+	}		
+}
+
+@-webkit-keyframes slideDown {
+	0% {
+		-webkit-transform: translateY(-100%);
+	}
+	50%{
+		-webkit-transform: translateY(8%);
+	}
+	65%{
+		-webkit-transform: translateY(-4%);
+	}
+	80%{
+		-webkit-transform: translateY(4%);
+	}
+	95%{
+		-webkit-transform: translateY(-2%);
+	}			
+	100% {
+		-webkit-transform: translateY(0%);
+	}	
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
+  opacity: 0;
+}

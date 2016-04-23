@@ -1,28 +1,40 @@
 <head>
-  <title>simple</title>
+  <title>Training Buddies manager</title>
 </head>
 
 <body>
   <div id="nav">
-    <h1>Edison <img src="intel-logo-highres.png" /> devices</h1>
+    <h1>Training Buddies manager</h1>
+    <span>Powered by <img src="intel-logo-highres.png" /> EDISON</span>
   </div>
   {{> main}}
+
+  <div id='footer'>
+    2016  - Team Pizza Runner
+  </div>
 </body>
 
 <template name="main">
   <div class="devices">
-    {{#each devices}}
-      {{> device this}}
-    {{/each}}
+      {{#each devices}}
+        {{> device this}}
+      {{/each}}
   </div>
 </template>
 
 <template name="device">
-  <div class="device">
-    <h2>{{name}}</h2>
-    <p>client: {{owner}}</p>
-    <div class="img-wrap">
-      <img src="faces-02.jpg" />
+  <div class='deviceholder'>
+    <div class="device">
+      <h2>{{name}}</h2>
+      <p>client: {{owner}}</p>
+      <p>Status: active <span class='active-icon'></span></p>
+      <div class="img-wrap">
+        <img src="faces-02.jpg" />
+      </div>
+    </div>
+    <div class='message slideDown fadeOut'> <!-- toggle 'fadeOut' class to hide and show -->
+        <h3>{{name}} says:</h3>
+        <p>Let's dance together!</p>
     </div>
   </div>
 </template>
