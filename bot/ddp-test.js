@@ -1,14 +1,5 @@
 var ddp = require('ddp');
-var ddpclient = new ddp({
-  // All properties optional, defaults shown 
-  host : "HMBP.local",
-  port : 3000,
-  ssl  : false,
-  autoReconnect : true,
-  autoReconnectTimer : 500,
-  maintainCollections : true,
-  ddpVersion : '1'
-});
+var ddpclient = new ddp({ host : "HMBP.local" });
 
 ddpclient.connect(function(error, wasReconnect) {
   if (error) { console.log('DDP connection error!'); return; }
