@@ -8,17 +8,6 @@
     <span>Powered by <img src="intel-logo-highres.png" /> EDISON</span>
   </div>
   {{> main}}
-
-
-      <div class="img-wrap show-together">
-        <img src="faces-01.jpg" class='together'/>
-        <img src="faces-02.jpg" class='lift'/>
-        <img src="faces-03.jpg" class='dance'/>
-      </div>
-
-  <div id='footer'>
-    2016  - Team Pizza Runner
-  </div>
 </body>
 
 <template name="main">
@@ -26,6 +15,10 @@
       {{#each devices}}
         {{> device this}}
       {{/each}}
+  </div>
+
+  <div id='footer'>
+    2016  - Team Pizza Runner
   </div>
 </template>
 

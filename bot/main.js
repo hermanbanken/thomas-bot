@@ -32,6 +32,10 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
     console.log(ddp.collections.users);
   });
 
+  function runDemo(){
+    
+  }
+
   // Onze todo's
   ddp.subscribe('userInbox', []);
   var taskObserver = ddp.observe("inbox");
@@ -39,7 +43,9 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
     var message = ddp.collections.inbox[id];
     console.log("received message:", message);
 
-    if(typeof message.content == 'string') {
+    if(message.content == "demo") {
+      runDemo();
+    } else if(typeof message.content == 'string') {
       ddp.call('speak', [message.content, "Xander"]);
     }
 
