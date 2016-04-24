@@ -14,7 +14,13 @@ Template.main.helpers({
 Template.device.helpers({
 	lastOnline: function(){
 		return moment(this.status.lastLogin.date).fromNow()
+	},
+
+	face: function(){
+		return this.profile.image || defaultImage;
 	}
 })
+
+var defaultImage = "face.jpg";
 
 Meteor.subscribe("userStatus");
