@@ -1,5 +1,6 @@
 var mraa = require('mraa');
-// var lib = require('jsupm_mma7660');
+var lib = require('jsupm_mma7660');
+
 module.exports = function(callback) {
 
   // connect interrupt of Accelerometer to GPIO pin 4
@@ -16,7 +17,7 @@ module.exports = function(callback) {
     accel.readByte(0x00);    
     accel.setModeStandby();
   }
-  
+
   var accel = new lib.MMA7660(
     lib.MMA7660_I2C_BUS,
     lib.MMA7660_DEFAULT_I2C_ADDR);

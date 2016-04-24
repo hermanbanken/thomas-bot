@@ -18,19 +18,23 @@ module.exports = function(ddpOptions) {
         // Else normal login
         .fail(function(e){ 
           console.warn("Token login failed. Trying password login.");
-          return q.all([
-            q(prompt('Give the username for this client: ')),
-            q(prompt('Give the password for this client: '))
-          ]).then(function(creds){
-            console.info("Logging in with "+creds[0]+"@edison");
-            return q.nfcall(login.loginWithEmail, ddpclient, creds[0]+'@edison', creds[1]); 
+          return q(prompt('Give the username for this client: '))
+            .then(function(user){
+              return q(prompt('Give the password for this client: '))
+                .then(function(pass){
+                  console.info("Logging in with "+user+"@edison");
+                  return q.nfcall(login.loginWithEmail, ddpclient, user+'@edison', pass); 
+                });
           })
         })
         // Save token
         .then(userInfo.save)
         .fail(function(e){console.error(e)})
     })
-    .then(function() { return ddpclient });
+    .then(function(user) { 
+      ddpclient.user = user;
+      return ddpclient
+    });
 }
 
 

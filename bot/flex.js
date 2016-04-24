@@ -7,6 +7,7 @@ function detect(pin, callback) {
 	// Create the LDT0-028 Piezo Vibration Sensor object using AIO pin 0
 	var sensor = new sensorModule.LDT0028(pin);
 	var buffer = [];
+	
 	var i = setInterval(function(){
 		buffer.push(sensor.getSample());
 		
