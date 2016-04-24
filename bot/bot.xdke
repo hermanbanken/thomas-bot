@@ -1,0 +1,135 @@
+{
+  "project": {
+    "projectSettingsVersion": "2.0.0",
+    "initialAutoPluginCount": 0,
+    "currentBuildConfiguration": "Android",
+    "projectFiles": {},
+    "projectDirectories": {}
+  },
+  "iot-tab": {
+    "fileStatus": {
+      "accel.js": {
+        "previousModTime": 1461449461893,
+        "modified": 1461449461893,
+        "seen": true,
+        "name": "accel.js"
+      },
+      "auth.js": {
+        "previousModTime": 1461455669790,
+        "modified": 1461455669790,
+        "seen": true,
+        "name": "auth.js"
+      },
+      "bot.xdk": {
+        "previousModTime": 1461459731208,
+        "modified": 1461459731208,
+        "seen": true,
+        "name": "bot.xdk"
+      },
+      "bot.xdke": {
+        "previousModTime": 1461459731225,
+        "modified": 1461459731225,
+        "seen": true,
+        "name": "bot.xdke"
+      },
+      "ddp-test.js": {
+        "previousModTime": 1461455669792,
+        "modified": 1461455669792,
+        "seen": true,
+        "name": "ddp-test.js"
+      },
+      "flex.js": {
+        "previousModTime": 1461449461895,
+        "modified": 1461449461895,
+        "seen": true,
+        "name": "flex.js"
+      },
+      "icon.png": {
+        "previousModTime": 1461459731085,
+        "modified": 1461459731085,
+        "seen": true,
+        "name": "icon.png"
+      },
+      "lcd-test.js": {
+        "previousModTime": 1461449461896,
+        "modified": 1461449461896,
+        "seen": true,
+        "name": "lcd-test.js"
+      },
+      "lcd.js": {
+        "previousModTime": 1461449461898,
+        "modified": 1461449461898,
+        "seen": true,
+        "name": "lcd.js"
+      },
+      "main.js": {
+        "previousModTime": 1461459578904,
+        "modified": 1461459578904,
+        "seen": true,
+        "name": "main.js"
+      },
+      "package.json": {
+        "previousModTime": 1461455669794,
+        "modified": 1461455669794,
+        "seen": true,
+        "name": "package.json"
+      },
+      "README.md": {
+        "previousModTime": 1461459731084,
+        "modified": 1461459731084,
+        "seen": true,
+        "name": "README.md"
+      },
+      "touch.js": {
+        "previousModTime": 1461459621571,
+        "modified": 1461459621571,
+        "seen": true,
+        "name": "touch.js"
+      },
+      "xdk/project-info.json": {
+        "previousModTime": 1461459731192,
+        "modified": 1461459731192,
+        "seen": true,
+        "name": "xdk/project-info.json"
+      }
+    },
+    "boardFileStatus": {
+      "accel.js": {
+        "previousModTime": 1461460088448
+      },
+      "auth.js": {
+        "previousModTime": 1461460088448
+      },
+      "ddp-test.js": {
+        "previousModTime": 1461460088448
+      },
+      "flex.js": {
+        "previousModTime": 1461460088448
+      },
+      "icon.png": {
+        "previousModTime": 1461460088448
+      },
+      "lcd-test.js": {
+        "previousModTime": 1461460088448
+      },
+      "lcd.js": {
+        "previousModTime": 1461460088448
+      },
+      "main.js": {
+        "previousModTime": 1461460088448
+      },
+      "package.json": {
+        "previousModTime": 1461460088448
+      },
+      "README.md": {
+        "previousModTime": 1461460088448
+      },
+      "touch.js": {
+        "previousModTime": 1461460088448
+      },
+      "xdk/project-info.json": {
+        "previousModTime": 1461460088448
+      }
+    }
+  }
+}
