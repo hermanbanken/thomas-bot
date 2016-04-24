@@ -5,6 +5,8 @@ import moment from 'moment';
 
 Devices = new Mongo.Collection('devices');
 
+var defaultImage = "faces-01.jpg";
+
 Template.main.helpers({
 	devices: () => Meteor.users.find({ 
 		"profile.owner": { "$exists": 1} 
@@ -17,10 +19,18 @@ Template.device.helpers({
 	},
 
 	face: function(){
-		return this.profile.image || defaultImage;
+		var img = this.profile.image || defaultImage;
+		console.log("face", img)
+		return img;
+	},
+
+	message: function(){
+		return this.profile.message;
+	},
+
+	hideMessage: function(){
+		return !this.profile.message;
 	}
 })
-
-var defaultImage = "faces-01.jpg";
 
 Meteor.subscribe("userStatus");

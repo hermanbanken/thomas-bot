@@ -33,15 +33,13 @@
         <p>Status: offline{{#if status.lastLogin}}, last seen {{lastOnline}} ({{status.lastLogin.ipAddr}}){{/if}}
         <span class='offline-icon'></span></p>
       {{/if}}
-      <div class="img-wrap show-together">  <!-- toggle 'show-together'/'show-lift'/'show-dance' class to the right face -->
-        <img src="faces-01.jpg" class='together'/>
-        <img src="faces-02.jpg" class='lift'/>
-        <img src="faces-03.jpg" class='dance'/>
+      <div class="img-wrap">
+        <img src="{{face}}" />
       </div>
     </div>
-    <div class='message slideDown fadeOut'> <!-- toggle 'fadeOut' class to hide and show -->
+    <div class='message slideDown {{#if hideMessage}}fadeOut{{/if}}'> <!-- toggle 'fadeOut' class to hide and show -->
         <h3>{{name}} says:</h3>
-        <p>Let's dance together!</p>
+        <p>{{message}}</p>
     </div>
   </div>
 </template>
