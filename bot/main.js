@@ -16,15 +16,15 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
 
   // Kietelen
   var i = 0;
-  var m = ["Kietel niet zo!", "Houd op!"];
+  var m = ["Don't tickle me!", "That tickles!"];
   
   flex(3, function(){
     console.log("Flex motion!");
-     ddp.call('speak', [m[i++ % m.length], "Xander"]);
+     ddp.call('speak', [m[i++ % m.length], "Alex"]);
   })
 
   q.nfcall(accel)
-    .then(function() { ddp.call('speak', ["Opgetild", "Xander"]); })
+    .then(function() { ddp.call('speak', ["Opgetild", "Alex"]); })
     .then(function() { return q.delay(5000) });
 
   // Weten welke gebruikers er zijn
@@ -32,6 +32,15 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
     console.log(ddp.collections.users);
   });
 
+  function runDemo(){
+    ddp.call('speak', 'Are you ready to play?', 'Alex');
+    // turn head to dance mode
+
+    setInterval(function() {
+
+      ddp.call('speak', 'Lets dance together!', 'Alex');      
+    }, 2000);
+  }
   // To change face:
   changeFace(ddp, 1);
 
@@ -42,7 +51,9 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
     var message = ddp.collections.inbox[id];
     console.log("received message:", message);
 
-    if(typeof message.content == 'string') {
+    if(message.content == "demo") {
+      runDemo();
+    } else if(typeof message.content == 'string') {
       ddp.call('speak', [message.content, "Xander"]);
     }
 
@@ -76,16 +87,65 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
 function changeFace(ddp, number) {
   switch(number) {
     case 1: 
-      //rotateMotorToFacePosition(1);
-      ddp.call('setFace', "faces-01.jpg", "thomas");
+      rotateMotorToFacePosition(1);
+      setInterval(function() { ddp.call('setFace', "faces-01.jpg", "thomas") }, 1000);
       break;
     case 2: 
-      //rotateMotorToFacePosition(2);
-      ddp.call('setFace', "faces-02.jpg", "thomas");
+      rotateMotorToFacePosition(2);
+      setInterval(function() { ddp.call('setFace', "faces-02.jpg", "thomas") }, 1000);
       break;
     case 3:
     default:
-      //rotateMotorToFacePosition(3);
-      ddp.call('setFace', "faces-03.jpg", "thomas");   
+      rotateMotorToFacePosition(3);
+      setInterval(function() { ddp.call('setFace', "faces-03.jpg", "thomas") }, 1000);   
   }
+}
+
+
+
+// motor function
+/*jslint node:true, vars:true, bitwise:true, unparam:true */
+/*jshint unused:true */
+// Leave the above lines for propper jshinting
+//Type Node.js Here :)
+​
+var Uln200xa_lib = require('jsupm_uln200xa');
+// Instantiate a Stepper motor on a ULN200XA Darlington Motor Driver
+// This was tested with the Grove Geared Step Motor with Driver
+​
+// Instantiate a ULN2003XA stepper object
+var myUln200xa_obj = new Uln200xa_lib.ULN200XA(4096, 8, 9, 10, 11);
+var facing = 3;
+​
+myUln200xa_obj.stop = function()
+{
+  myUln200xa_obj.release();
+};
+​
+myUln200xa_obj.quit = function()
+{
+  myUln200xa_obj = null;
+  Uln200xa_lib.cleanUp();
+  Uln200xa_lib = null;
+  console.log("Exiting");
+  process.exit(0);
+};
+​
+myUln200xa_obj.setSpeed(7); // 7 RPMs
+​
+function rotateMotorToFacePosition(newface){
+var steps = 0;
+    console.log("facing"+newface);
+    if (newface < facing) {
+        steps = (facing - newface) * 1024;
+        //console.log(steps);
+        myUln200xa_obj.setDirection(Uln200xa_lib.ULN200XA.DIR_CCW);
+        myUln200xa_obj.stepperSteps(steps);
+    } else {
+        steps = (newface - facing) * 1024;
+        //console.log(steps);
+        myUln200xa_obj.setDirection(Uln200xa_lib.ULN200XA.DIR_CW);
+        myUln200xa_obj.stepperSteps(steps);
+    }
+    facing = newface;
 }
