@@ -24,5 +24,8 @@
     <div class="img-wrap">
       <img src="faces-02.jpg" />
     </div>
+    {{#if status.online}}Online{{else}}Offline{{/if}}
+    {{status.lastLogin.ipAddress}}
+    {{lastOnline}}
   </div>
 </template>

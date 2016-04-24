@@ -22,4 +22,19 @@ Meteor.startup(() => {
         $set: { "profile.owner": u[1] }
       });
     });
+
+  Meteor.users.find({ "status.online": true }).observe({
+    added: function(id) {
+      console.log("Online", id);
+      // id just came online
+    },
+    removed: function(id) {
+      console.log("Offline", id);
+      // id just went offline
+    }
+  });
+});
+
+Meteor.publish("userStatus", function() {
+  return Meteor.users.find({ }, { fields: { 'status': 1 } });
 });
