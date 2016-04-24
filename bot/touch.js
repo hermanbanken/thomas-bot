@@ -1,11 +1,14 @@
-var mraa = require('mraa'); //require mraa
-// console.log('MRAA Version: ' + mraa.getVersion()); //write the mraa version to the console
+var mraa = require('mraa');
 
 function detect(pin, callback) //
 {
-	var digitalPin = new mraa.Gpio(pin); //setup digital read on pin
-	digitalPin.dir(mraa.DIR_IN); //set the gpio direction to input
-	digitalPin.isr(mraa.EDGE_FALLING, function(){
+	// setup digital read on pin
+	var pin = new mraa.Gpio(pin);
+	// set the gpio direction to input
+	pin.dir(mraa.DIR_IN);
+	// upon stop of touch, call callback
+	pin.isr(mraa.EDGE_FALLING, function(){
+		pin.isrExit();
 		setTimeout(callback, 0);
 	});
 }
