@@ -11,11 +11,11 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
   console.log("Connected", ddp.user.id);
 
   // Store bluetooth address
-  var bt = exec("rfkill unblock bluetooth && bluetoothctl discoverable on");
-  bt.once('data', function(result){
-    var mac = /.{2}:.{2}:.{2}:.{2}:.{2}:.{2}/img.exec(result);
-    ddp.call("setBluetoothMac", [mac]);
-  })
+  // var bt = exec("rfkill unblock bluetooth && bluetoothctl discoverable on");
+  // bt.once('data', function(result){
+  //   var mac = /.{2}:.{2}:.{2}:.{2}:.{2}:.{2}/img.exec(result);
+  //   ddp.call("setBluetoothMac", [mac]);
+  // })
 
   function self() {
     var user = ddp.collections.users[ddp.user.id];

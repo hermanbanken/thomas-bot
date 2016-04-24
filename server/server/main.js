@@ -34,6 +34,8 @@ Meteor.startup(() => {
     }
   });
 
+  Meteor.users.update({ "profile.message": { "$exists": 1 } }, {"$unset":{"profile.message": ""}});
+
   Meteor.methods({
     setFace: function(faceImgSrc, forUser) {
       if(!this.userId) throw new Meteor.Error(403,"bad access");
@@ -61,10 +63,19 @@ Meteor.startup(() => {
 
     speak: function(text, voice){
       if(!this.userId) throw new Meteor.Error(403,"bad access");
+      var userId = this.userId;
 
       voice = voice || "Alex";
 
+      // Show message
+      Meteor.users.update({_id: this.userId}, {"$set":{"profile.message": text}});
+      Meteor.setTimeout(function() {
+        Meteor.users.update({_id: userId}, {"$unset": {"profile.message": ""}});
+      }, 3000);
+
       this.unblock();
+
+      // Talk
       var future = new Future();
       var command = "say -v \""+voice+"\" \""+text+"\"";
       exec(command, function(err, stdout, stderr){
