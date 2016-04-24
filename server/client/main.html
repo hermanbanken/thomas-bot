@@ -12,14 +12,22 @@
 
 <template name="main">
   <div class="devices">
+    {{#if logged_in}}
       {{#each devices}}
         {{> device this}}
       {{/each}}
+    {{else}}
+      {{> login}}
+    {{/if}}
   </div>
 
   <div id='footer'>
     2016  - Team Pizza Runner
   </div>
+</template>
+
+<template name="login">
+  <button>Login</button>
 </template>
 
 <template name="device">

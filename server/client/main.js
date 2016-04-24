@@ -10,13 +10,21 @@ var defaultImage = "faces-01.jpg";
 Template.main.helpers({
 	devices: () => Meteor.users.find({ 
 		"profile.owner": { "$exists": 1} 
-	})
+	}),
+
+	logged_in: () => Meteor.userId()
 })
 
 Template.main.events({
 	"click #footer": function() {
 		Meteor.call("addMessage", "demo", "thomas");
 		console.log("Starting demo")
+	}
+})
+
+Template.login.events({
+	"click button": function() {
+		Meteor.loginWithPassword('gui', 'gui')
 	}
 })
 
