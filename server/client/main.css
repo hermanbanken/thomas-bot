@@ -87,11 +87,18 @@ h2 + p {
 	border-radius: 2em;
 	max-width: 12em;
 }
-.active-icon {
+.online-icon {
 	display: inline-block;
 	width:8px;
 	height: 8px;
 	background: green;
+	border-radius: 8px;
+}
+.offline-icon {
+	display: inline-block;
+	width:8px;
+	height: 8px;
+	background: red;
 	border-radius: 8px;
 }
 .message {
