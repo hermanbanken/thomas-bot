@@ -27,10 +27,11 @@
     <div class="device">
       <h2>{{name}}</h2>
       <p>client: {{owner}}</p>
-	  {{#if status.online}}
-        <p>Status: online <span class='online-icon'></span>({{status.lastLogin.ipAddress}})</p>
-	  {{else}}
-        <p>Status: offline, last seen {{lastOnline}} <span class='offline-icon'></span>({{status.lastLogin.ipAddress}})</p>
+      {{#if status.online}}
+        <p>Status: online <span class='online-icon'></span></p>
+      {{else}}
+        <p>Status: offline{{#if status.lastLogin}}, last seen {{lastOnline}} ({{status.lastLogin.ipAddr}}){{/if}}
+        <span class='offline-icon'></span></p>
       {{/if}}
       <div class="img-wrap">
         <img src="faces-02.jpg" />

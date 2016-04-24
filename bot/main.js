@@ -7,5 +7,5 @@ var display = new lcd.LCD(0);
 auth({ host : "10.10.107.39" }).then(function(ddp){
   flex(3, function(){
     console.log("Flex motion!");
-  })  
+  })
 }).done();
