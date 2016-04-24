@@ -27,7 +27,12 @@
     <div class="device">
       <h2>{{name}}</h2>
       <p>client: {{owner}}</p>
-      <p>Status: active <span class='active-icon'></span></p>
+      {{#if status.online}}
+        <p>Status: online <span class='online-icon'></span></p>
+      {{else}}
+        <p>Status: offline{{#if status.lastLogin}}, last seen {{lastOnline}} ({{status.lastLogin.ipAddr}}){{/if}}
+        <span class='offline-icon'></span></p>
+      {{/if}}
       <div class="img-wrap">
         <img src="faces-02.jpg" />
       </div>

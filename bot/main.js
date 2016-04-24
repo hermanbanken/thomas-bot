@@ -17,8 +17,6 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
   		console.log("Both sensors were touched!");
 	})
 
-// exercise().then(exercise);
-
   // start program
 
   // vraag om te spelen
@@ -38,10 +36,15 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
 
   // vragen naar andere bot brengen.
 
+  ddp.call(
+      'speak',
+      ["Ik ben opgestart! Getekend, Thomas.", "Xander"],
+      function (err, result) {   // callback which returns the method call results 
+        console.log('called function, result: ' + result);
+      },
+      function () {              // callback which fires when server has finished 
+        console.log('updated');  // sending any updated documents as a result of 
+        console.log(ddp.collections.users);  // calling this method 
+      }
+    );
 }).done();
-
-function exercise(){
-
-	return q(1);
-
-}
