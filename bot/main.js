@@ -77,15 +77,15 @@ function changeFace(ddp, number) {
   switch(number) {
     case 1: 
       //rotateMotorToFacePosition(1);
-      ddp.call('setFace', "face-01.jpg", "thomas");
+      ddp.call('setFace', "faces-01.jpg", "thomas");
       break;
     case 2: 
       //rotateMotorToFacePosition(2);
-      ddp.call('setFace', "face-01.jpg", "thomas");
+      ddp.call('setFace', "faces-02.jpg", "thomas");
       break;
     case 3:
     default:
       //rotateMotorToFacePosition(3);
-      ddp.call('setFace', "face-01.jpg", "thomas");   
+      ddp.call('setFace', "faces-03.jpg", "thomas");   
   }
 }

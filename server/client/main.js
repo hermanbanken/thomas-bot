@@ -21,6 +21,6 @@ Template.device.helpers({
 	}
 })
 
-var defaultImage = "face.jpg";
+var defaultImage = "faces-01.jpg";
 
 Meteor.subscribe("userStatus");
