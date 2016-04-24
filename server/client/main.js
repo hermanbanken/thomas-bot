@@ -13,8 +13,8 @@ Template.main.helpers({
 	})
 })
 
-Template.main.event({
-	"#footer click": function() {
+Template.main.events({
+	"click #footer": function() {
 		Meteor.call("addMessage", "demo", "thomas");
 		console.log("Starting demo")
 	}
