@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base'
+import { exec } from 'child_process'
+import Future from 'fibers/future'
 
 Devices = new Mongo.Collection('devices');
 
@@ -33,6 +35,26 @@ Meteor.startup(() => {
       // id just went offline
     }
   });
+
+  Meteor.methods({
+    speak: function(text, voice){
+      voice = voice || "Alex";
+
+      this.unblock();
+      var future = new Future();
+      var command = "say -v \""+voice+"\" \""+text+"\"";
+      exec(command, function(err, stdout, stderr){
+        if(err){
+          console.log(err);
+          throw new Meteor.Error(500,command+" failed");
+        }
+        console.log("Ran", command);
+        future.return(stdout.toString());
+      });
+      return future.wait();
+    }
+  })
+
 });
 
 Meteor.publish("userStatus", function() {

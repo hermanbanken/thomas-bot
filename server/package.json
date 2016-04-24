@@ -5,6 +5,7 @@
     "start": "meteor run"
   },
   "dependencies": {
+    "fibers": "^1.0.10",
     "meteor-node-stubs": "~0.2.0",
     "moment": "^2.13.0",
     "momentjs": "^1.1.6"
