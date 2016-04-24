@@ -45,7 +45,8 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
         return 1;
       })
       .then(function(){
-        ddp.call('addMessage', 'seconddemo', 'lisa');
+        console.log("forward to lisa next");
+        ddp.call('addMessage', ['seconddemo', 'lisa']);
       });
   }
 
