@@ -35,7 +35,8 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
   function runDemo(){
     ddp.call('speak', ['Are you ready to play?', 'Alex']);
     // turn head to dance mode
-    changeFace(ddp,3);
+    // changeFace(ddp,3);
+    myUln200xa_obj.goForward();
 
     setTimeout(function() {
       ddp.call('speak', ['Lets dance together!', 'Alex']);
@@ -116,6 +117,14 @@ var Uln200xa_lib = require('jsupm_uln200xa');
 // Instantiate a ULN2003XA stepper object
 var myUln200xa_obj = new Uln200xa_lib.ULN200XA(4096, 8, 9, 10, 11);
 var facing = 3;
+​
+myUln200xa_obj.goForward = function()
+{
+    myUln200xa_obj.setSpeed(7); // 5 RPMs
+    myUln200xa_obj.setDirection(Uln200xa_lib.ULN200XA.DIR_CW);
+    console.log("Rotating 1 revolution clockwise.");
+    myUln200xa_obj.stepperSteps(4096);
+};
 ​
 myUln200xa_obj.stop = function()
 {
