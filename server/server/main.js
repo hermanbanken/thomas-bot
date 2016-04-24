@@ -65,6 +65,9 @@ Meteor.startup(() => {
     },
     markTaskDone: function(messageId){
       Inbox.remove({_id: messageId, userId: this.userId});
+    },
+    ping: function(){
+      return 'pong';
     }
   })
 

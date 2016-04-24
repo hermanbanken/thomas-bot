@@ -31,6 +31,9 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
     console.log("[ADDED] to " + taskObserver.name + ":  " + id);
   };
 
+  // Keep DDP connection active
+  setInterval(function() { ddp.call('ping', []); }, 3000);
+
   // start program
 
   // vraag om te spelen
