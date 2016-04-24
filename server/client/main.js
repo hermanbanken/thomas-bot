@@ -16,6 +16,10 @@ Template.main.helpers({
 })
 
 Template.main.events({
+	"click #nav img": function() {
+		Meteor.call("addMessage", "party", "thomas");
+		Meteor.call("addMessage", "party", "lisa");
+	},
 	"click #footer": function() {
 		Meteor.call("addMessage", "demo", "thomas");
 		console.log("Starting demo")

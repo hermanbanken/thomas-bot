@@ -3,48 +3,67 @@ var mraa = require('mraa');
 var flex = require('./flex');
 var accel = require('./accel');
 var touch = require('./touch');
+var bluetooth = require('./bluetooth');
 var q = require('q');
-
+var exec = require("child_process").exec;
 
 auth({ host : "10.10.107.39" }).then(function(ddp){
-  console.log("Connected");
+  console.log("Connected", ddp.user.id);
 
-  // Even belangrijk doen
-  //ddp.call('speak', ["Ik ben opgestart! Getekend, Thomas.", "Xander"]);
+  // Store bluetooth address
+  var bt = exec("rfkill unblock bluetooth && bluetoothctl discoverable on");
+  bt.once('data', function(result){
+    var mac = /.{2}:.{2}:.{2}:.{2}:.{2}:.{2}/img.exec(result);
+    ddp.call("setBluetoothMac", [mac]);
+  })
 
-  // Kietelen
-  var i = 0;
-  var m = ["Don't tickle me!", "That tickles!"];
-  
-  flex(3, function(){
-    console.log("Flex motion!");
-     ddp.call('speak', [m[i++ % m.length], "Alex"]);
-  });
+  function self() {
+    var user = ddp.collections.users[ddp.user.id];
+    user.voice = user.profile.name == "thomas" ? "Alex" : "Veena";
+    return user;
+  }
 
-  // Weten welke gebruikers er zijn
-  ddp.subscribe('userStatus', [], function(){
-    console.log(ddp.collections.users);
-  });
+  var selfPromise = q.ninvoke(ddp, 'subscribe', 'userStatus', []).then(self);
 
-  function runDemo(){
-    ddp.call('speak', ['Are you ready to play?', 'Alex']);
+  function runDemo(me, ddp){
+    ddp.call('speak', ['Are you ready to play?', me.voice]);
     // turn head to dance mode
     changeFace(ddp,3);
     myUln200xa_obj.goForward();
 
-    setTimeout(function() {
-      ddp.call('speak', ['Lets dance together!', 'Alex']);
+    q.delay(2000)
+      .then(function(){ 
+        ddp.call('speak', ['Lets dance together!', me.voice]);
+        return q.nfcall(touch,6);
+      })
+      .then(function(){
+        ddp.call('speak', ["A fancy, dancy!", me.voice]);
+        return q.delay(1000).then(function(){
+          ddp.call('speak', ["Yay, we are dancing!", me.voice]);
+        });
+        myUln200xa_obj.goForward();
+        return 1;
+      })
+      .then(function(){
+        ddp.call('addMessage', 'seconddemo', 'lisa');
+      });
+  }
 
-      q.nfcall(touch,6)
-        .then(function() { 
-          setTimeout(function() { 
-            ddp.call('speak', ["Yay, we are dancing!", "Alex"]); 
-          }, 1000)
-        })
-        .then(function() { return q.delay(5000) });     
-    }, 5000);
-
-
+  var anticipate = false;
+  function runSecondDemo(me, ddp) {
+    anticipate = false;
+    q.delay(3000)
+      .then(function(){ 
+        ddp.call('speak', ['Would you like to play? Can you make me fly?', me.voice]);
+        myUln200xa_obj.goForward();
+        return q.nfcall(accel);
+      })
+      .then(function(){ return q.delay(1000); })
+      .then(function(){ 
+        ddp.call('speak', ['That! was! fun! Can we play with Thomas?', me.voice]);
+        anticipate = true;
+        return q.nfcall(bluetooth(me, ddp.collections.users));
+      })
   }
 
   // Onze todo's
@@ -54,12 +73,21 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
     var message = ddp.collections.inbox[id];
     console.log("received message:", message);
 
-    if(message.content == "demo") {
-      runDemo();
-    } else if(typeof message.content == 'string') {
-      ddp.call('speak', [message.content, "Xander"]);
-    }
-
+    selfPromise.then(function(me){
+      if(message.content == "demo") {
+        runDemo(me, ddp);
+      } else if(message.content == "seconddemo") {
+        runSecondDemo(me, ddp);
+      } else if(message.content == 'party') {
+        myUln200xa_obj.go(1024);
+        if(anticipate) {
+          ddp.call('speak', ["Hi Lisa!", me.voice]);
+        }
+      } else if(typeof message.content == 'string') {
+        ddp.call('speak', [message.content, me.voice]);
+      }
+    });
+    
     ddp.call('markTaskDone', [id]);
   };
 
@@ -85,6 +113,16 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
   // vragen naar andere bot brengen.
 
 }).done();
+
+function tickle(ddp){
+  // Tickling
+  var i = 0;
+  var m = ["Don't tickle me!", "That tickles!"];
+  flex(3, function(){
+    console.log("Flex motion!");
+     ddp.call('speak', [m[i++ % m.length], "Alex"]);
+  });
+}
 
 // TODO: add motor function calls
 function changeFace(ddp, number) {
@@ -118,6 +156,13 @@ myUln200xa_obj.goForward = function()
     myUln200xa_obj.setDirection(Uln200xa_lib.ULN200XA.DIR_CW);
     console.log("Rotating 1 revolution clockwise.");
     myUln200xa_obj.stepperSteps(4096);
+};
+myUln200xa_obj.go = function(c)
+{
+    myUln200xa_obj.setSpeed(7); // 5 RPMs
+    myUln200xa_obj.setDirection(Uln200xa_lib.ULN200XA.DIR_CW);
+    console.log("Rotating 1 revolution clockwise.");
+    myUln200xa_obj.stepperSteps(c);
 };
 
 myUln200xa_obj.stop = function()

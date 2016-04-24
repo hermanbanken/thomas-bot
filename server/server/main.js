@@ -54,6 +54,11 @@ Meteor.startup(() => {
       Meteor.users.update({ _id: forUser }, { "$set": { "profile.image": faceImgSrc } });
     },
 
+    setBluetoothMac: function(mac){
+      if(!this.userId) throw new Meteor.Error(403,"bad access");
+      Meteor.users.update({_id: this.userId}, { "$set": { "profile.mac": mac } });
+    },
+
     speak: function(text, voice){
       if(!this.userId) throw new Meteor.Error(403,"bad access");
 

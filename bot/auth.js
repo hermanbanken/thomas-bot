@@ -31,7 +31,7 @@ module.exports = function(ddpOptions) {
         .then(userInfo.save)
         .fail(function(e){console.error(e)})
     })
-    .then(function(user) { 
+    .then(function(user) {
       ddpclient.user = user;
       return ddpclient
     });
@@ -56,6 +56,7 @@ var userInfo = {
     console.log("logged in until", result.tokenExpires);
     result.tokenExpires = new Date(result.tokenExpires).getTime()
     fs.writeFileSync('user.conf', JSON.stringify(result));
+    return result;
   },
   get: function(cb){
     fs.stat('user.conf', function(err){

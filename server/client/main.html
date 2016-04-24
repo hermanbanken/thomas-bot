@@ -3,14 +3,14 @@
 </head>
 
 <body>
-  <div id="nav">
-    <h1>Training Buddies manager</h1>
-    <span>Powered by <img src="intel-logo-highres.png" /> EDISON</span>
-  </div>
   {{> main}}
 </body>
 
 <template name="main">
+  <div id="nav">
+    <h1>Training Buddies manager</h1>
+    <span>Powered by <img src="intel-logo-highres.png" /> EDISON</span>
+  </div>
   <div class="devices">
     {{#if logged_in}}
       {{#each devices}}
