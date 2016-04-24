@@ -19,7 +19,10 @@ function detect(pin, callback) {
 			buffer = buffer.slice(-1);
 		}
 	}, 10);
-	return i;
+	// disposable
+	return function(){
+		clearInterval(i);
+	};
 }
 
 module.exports = detect;

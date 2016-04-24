@@ -27,7 +27,7 @@ module.exports = function(ddpOptions) {
         .then(userInfo.save)
         .fail(function(e){console.error(e)})
     })
-    .then(q(ddpclient));
+    .then(function() { return ddpclient });
 }
 
 
