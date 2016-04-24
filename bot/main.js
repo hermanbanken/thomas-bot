@@ -33,16 +33,24 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
   });
 
   function runDemo(){
-    ddp.call('speak', 'Are you ready to play?', 'Alex');
+    ddp.call('speak', ['Are you ready to play?', 'Alex']);
     // turn head to dance mode
+    changeFace(ddp,3);
 
-    setInterval(function() {
+    setTimeout(function() {
+      ddp.call('speak', ['Lets dance together!', 'Alex']);
 
-      ddp.call('speak', 'Lets dance together!', 'Alex');      
-    }, 2000);
+      q.nfcall(touch,6)
+        .then(function() { 
+          setTimeout(function() { 
+            ddp.call('speak', ["Yay, we are dancing!", "Alex"]); 
+          }, 1000)
+        }
+        .then(function() { return q.delay(5000) });     
+    }, 5000);
+
+
   }
-  // To change face:
-  changeFace(ddp, 1);
 
   // Onze todo's
   ddp.subscribe('userInbox', []);
@@ -88,20 +96,18 @@ function changeFace(ddp, number) {
   switch(number) {
     case 1: 
       rotateMotorToFacePosition(1);
-      setInterval(function() { ddp.call('setFace', "faces-01.jpg", "thomas") }, 1000);
+      setTimeout(function() { ddp.call('setFace', "faces-01.jpg", "thomas") }, 1000);
       break;
     case 2: 
       rotateMotorToFacePosition(2);
-      setInterval(function() { ddp.call('setFace', "faces-02.jpg", "thomas") }, 1000);
+      setTimeout(function() { ddp.call('setFace', "faces-02.jpg", "thomas") }, 1000);
       break;
     case 3:
     default:
       rotateMotorToFacePosition(3);
-      setInterval(function() { ddp.call('setFace', "faces-03.jpg", "thomas") }, 1000);   
+      setTimeout(function() { ddp.call('setFace', "faces-03.jpg", "thomas") }, 1000);   
   }
 }
-
-
 
 // motor function
 var Uln200xa_lib = require('jsupm_uln200xa');
