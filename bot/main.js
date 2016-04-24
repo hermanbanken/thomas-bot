@@ -32,6 +32,9 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
     console.log(ddp.collections.users);
   });
 
+  // To change face:
+  changeFace(ddp, 1);
+
   // Onze todo's
   ddp.subscribe('userInbox', []);
   var taskObserver = ddp.observe("inbox");
@@ -68,3 +71,21 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
   // vragen naar andere bot brengen.
 
 }).done();
+
+// TODO: add motor function calls
+function changeFace(ddp, number) {
+  switch(number) {
+    case 1: 
+      //rotateMotorToFacePosition(1);
+      ddp.call('setFace', "face-01.jpg", "thomas");
+      break;
+    case 2: 
+      //rotateMotorToFacePosition(2);
+      ddp.call('setFace', "face-01.jpg", "thomas");
+      break;
+    case 3:
+    default:
+      //rotateMotorToFacePosition(3);
+      ddp.call('setFace', "face-01.jpg", "thomas");   
+  }
+}
