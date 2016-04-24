@@ -24,7 +24,10 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
   })
 
   q.nfcall(accel)
-    .then(function() { ddp.call('speak', ["Opgetild", "Alex"]); })
+    .then(function() { 
+      console.log("lifted");
+      ddp.call('speak', ["Opgetild", "Alex"]);
+    })
     .then(function() { return q.delay(5000) });
 
   // Weten welke gebruikers er zijn
@@ -110,12 +113,12 @@ var Uln200xa_lib = require('jsupm_uln200xa');
 // Instantiate a ULN2003XA stepper object
 var myUln200xa_obj = new Uln200xa_lib.ULN200XA(4096, 8, 9, 10, 11);
 var facing = 3;
-​
+
 myUln200xa_obj.stop = function()
 {
   myUln200xa_obj.release();
 };
-​
+
 myUln200xa_obj.quit = function()
 {
   myUln200xa_obj = null;
@@ -124,9 +127,9 @@ myUln200xa_obj.quit = function()
   console.log("Exiting");
   process.exit(0);
 };
-​
+
 myUln200xa_obj.setSpeed(7); // 7 RPMs
-​
+
 function rotateMotorToFacePosition(newface){
 var steps = 0;
     console.log("facing"+newface);
