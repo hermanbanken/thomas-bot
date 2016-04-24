@@ -25,8 +25,8 @@
 <template name="device">
   <div class='deviceholder'>
     <div class="device">
-      <h2>{{name}}</h2>
-      <p>client: {{owner}}</p>
+      <h2>{{profile.name}}</h2>
+      <p>client: {{profile.owner}}</p>
       {{#if status.online}}
         <p>Status: online <span class='online-icon'></span></p>
       {{else}}

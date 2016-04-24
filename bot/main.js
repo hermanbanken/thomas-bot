@@ -2,9 +2,7 @@ var auth = require('./auth');
 var mraa = require('mraa');
 var flex = require('./flex');
 var accel = require('./accel');
-// var touch = require('./touch');
-// var lcd = require('./lcd');
-// var display = new lcd.LCD(0);
+var touch = require('./touch');
 var q = require('q');
 
 
@@ -21,14 +19,7 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
   flex(3, function(){
     console.log("Flex motion!");
      ddp.call('speak', [m[i++ % m.length], "Alex"]);
-  })
-
-  q.nfcall(accel)
-    .then(function() { 
-      console.log("lifted");
-      ddp.call('speak', ["Opgetild", "Alex"]);
-    })
-    .then(function() { return q.delay(5000) });
+  });
 
   // Weten welke gebruikers er zijn
   ddp.subscribe('userStatus', [], function(){
@@ -49,7 +40,7 @@ auth({ host : "10.10.107.39" }).then(function(ddp){
           setTimeout(function() { 
             ddp.call('speak', ["Yay, we are dancing!", "Alex"]); 
           }, 1000)
-        }
+        })
         .then(function() { return q.delay(5000) });     
     }, 5000);
 
