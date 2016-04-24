@@ -1,30 +1,35 @@
-var five = require("johnny-five");
-var Edison = require("edison-io");
-
+var mraa = require('mraa');
+// var lib = require('jsupm_mma7660');
 module.exports = function(callback) {
-  var board = new five.Board({ io: new Edison() });
 
-  var i = 0;
-  board.on("ready", function() {
-    console.log("Board ready");
-    // Plug the MMA7660 Accelerometer module into an I2C jack
-    var accelerometer = new five.Accelerometer({ controller: "MMA7660" });
-    // this.samplingInterval(20);
-    accelerometer.on("data", function() {
-      console.log("accelerometer "+(i++));
-      console.log("  x            : ", this.x);
-      console.log("  y            : ", this.y);
-      console.log("  z            : ", this.z);
-      console.log("  pitch        : ", this.pitch);
-      console.log("  roll         : ", this.roll);
-      console.log("  acceleration : ", this.acceleration);
-      console.log("  inclination  : ", this.inclination);
-      console.log("  orientation  : ", this.orientation);
-      console.log("--------------------------------------");
-    });
-    accelerometer.enable();
+  // connect interrupt of Accelerometer to GPIO pin 4
+  var pin = new mraa.Gpio(4);                      
+  pin.dir(mraa.DIR_IN);                            
+  pin.isr(mraa.EDGE_RISING, function(){
+    setTimeout(callback, 0);
+    stop();
   });
 
+  function stop(){
+    pin.isrExit();
+    //read dummy to reset interrupt
+    accel.readByte(0x00);    
+    accel.setModeStandby();
+  }
+  
+  var accel = new lib.MMA7660(
+    lib.MMA7660_I2C_BUS,
+    lib.MMA7660_DEFAULT_I2C_ADDR);
+  
+  // place device in standby mode for configuration
+  accel.setModeStandby();
+  //Configure Int controll to activate on shake/tap
+  accel.writeByte(0x06, 0xE4);
+  //Blank samples register
+  accel.writeByte(0x08, 0x00);
+  //Write the interrupt register: 111+counts
+  accel.writeByte(0x09, 0xE1);
+  //set into Active mode,without sleep and enabled interrupts
+  accel.writeByte(0x07, 0xC9);
+
 }
-
-
