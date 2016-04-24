@@ -27,12 +27,10 @@ Meteor.startup(() => {
 
   Meteor.users.find({ "status.online": true }).observe({
     added: function(id) {
-      console.log("Online", id);
-      // id just came online
+      console.log("Online", id.profile.name, id.status.lastLogin.ipAddr);
     },
     removed: function(id) {
-      console.log("Offline", id);
-      // id just went offline
+      console.log("Offline", id.profile.name, id.status.lastLogin.ipAddr);
     }
   });
 
@@ -57,11 +55,21 @@ Meteor.startup(() => {
     },
     addMessage: function(message, forUser){
       if(!this.userId) throw new Meteor.Error(403,"bad access");
+      if(!message) throw new Meteor.Error(400,"bad request: give arguments = a message and a user id");
+      if(!forUser) throw new Meteor.Error(400,"bad request: give a second argument = a user id");
 
-      Inbox.insert({
-        content: message,
-        userId: forUser
-      });
+      var byId = Meteor.users.findOne({ _id: forUser });
+      if(!byId) {
+        var user = 
+          Meteor.users.findOne({ "profile.name": forUser }) ||
+          Meteor.users.findOne({ "emails.address": forUser });
+        if(!user) {
+          throw new Meteor.Error(400,"bad request: user argument did not match id's, name, or address.");
+        }
+        forUser = user._id;
+      }
+
+      Inbox.insert({ content: message, userId: forUser });
     },
     markTaskDone: function(messageId){
       Inbox.remove({_id: messageId, userId: this.userId});
