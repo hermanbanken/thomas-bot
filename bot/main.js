@@ -104,15 +104,9 @@ function changeFace(ddp, number) {
 
 
 // motor function
-/*jslint node:true, vars:true, bitwise:true, unparam:true */
-/*jshint unused:true */
-// Leave the above lines for propper jshinting
-//Type Node.js Here :)
-​
 var Uln200xa_lib = require('jsupm_uln200xa');
 // Instantiate a Stepper motor on a ULN200XA Darlington Motor Driver
 // This was tested with the Grove Geared Step Motor with Driver
-​
 // Instantiate a ULN2003XA stepper object
 var myUln200xa_obj = new Uln200xa_lib.ULN200XA(4096, 8, 9, 10, 11);
 var facing = 3;
