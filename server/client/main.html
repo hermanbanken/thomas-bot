@@ -9,6 +9,13 @@
   </div>
   {{> main}}
 
+
+      <div class="img-wrap show-together">
+        <img src="faces-01.jpg" class='together'/>
+        <img src="faces-02.jpg" class='lift'/>
+        <img src="faces-03.jpg" class='dance'/>
+      </div>
+
   <div id='footer'>
     2016  - Team Pizza Runner
   </div>
@@ -33,8 +40,10 @@
         <p>Status: offline{{#if status.lastLogin}}, last seen {{lastOnline}} ({{status.lastLogin.ipAddr}}){{/if}}
         <span class='offline-icon'></span></p>
       {{/if}}
-      <div class="img-wrap">
-        <img src="faces-02.jpg" />
+      <div class="img-wrap show-together">  <!-- toggle 'show-together'/'show-lift'/'show-dance' class to the right face -->
+        <img src="faces-01.jpg" class='together'/>
+        <img src="faces-02.jpg" class='lift'/>
+        <img src="faces-03.jpg" class='dance'/>
       </div>
     </div>
     <div class='message slideDown fadeOut'> <!-- toggle 'fadeOut' class to hide and show -->
