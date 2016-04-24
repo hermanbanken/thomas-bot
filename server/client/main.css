@@ -101,20 +101,6 @@ h2 + p {
 	background: red;
 	border-radius: 8px;
 }
-.img-wrap img {
-	display: none;
-}
-.img-wrap.show-together img.together {
-	display:block;
-}
-
-.img-wrap.show-lift img.lift {
-	display:block;
-}
-
-.img-wrap.show-dance img.dance {
-	display:block;
-}
 
 
 .message {

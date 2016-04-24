@@ -35,6 +35,25 @@ Meteor.startup(() => {
   });
 
   Meteor.methods({
+    setFace: function(faceImgSrc, forUser) {
+      if(!this.userId) throw new Meteor.Error(403,"bad access");
+      if(!faceImgSrc) throw new Meteor.Error(400,"bad request: give arguments = a image source and a user id");
+      if(!forUser) throw new Meteor.Error(400,"bad request: give a second argument = a user id");
+
+      var byId = Meteor.users.findOne({ _id: forUser });
+      if(!byId) {
+        var user = 
+          Meteor.users.findOne({ "profile.name": forUser }) ||
+          Meteor.users.findOne({ "emails.address": forUser });
+        if(!user) {
+          throw new Meteor.Error(400,"bad request: user argument did not match id's, name, or address.");
+        }
+        forUser = user._id;
+      }
+
+      Meteor.users.update({ _id: forUser }, { "$set": { "profile.image": faceImgSrc } });
+    },
+
     speak: function(text, voice){
       if(!this.userId) throw new Meteor.Error(403,"bad access");
 
