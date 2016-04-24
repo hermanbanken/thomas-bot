@@ -3,7 +3,7 @@ import { Accounts } from 'meteor/accounts-base'
 import { exec } from 'child_process'
 import Future from 'fibers/future'
 
-Devices = new Mongo.Collection('devices');
+Inbox = new Mongo.Collection('inbox');
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -38,6 +38,8 @@ Meteor.startup(() => {
 
   Meteor.methods({
     speak: function(text, voice){
+      if(!this.userId) throw new Meteor.Error(403,"bad access");
+
       voice = voice || "Alex";
 
       this.unblock();
@@ -52,10 +54,25 @@ Meteor.startup(() => {
         future.return(stdout.toString());
       });
       return future.wait();
+    },
+    addMessage: function(message, forUser){
+      if(!this.userId) throw new Meteor.Error(403,"bad access");
+
+      Inbox.insert({
+        content: message,
+        userId: forUser
+      });
+    },
+    markTaskDone: function(messageId){
+      Inbox.remove({_id: messageId, userId: this.userId});
     }
   })
 
 });
+
+Meteor.publish("userInbox", function() {
+  return Inbox.find({ userId: this.userId });
+})
 
 Meteor.publish("userStatus", function() {
   return Meteor.users.find({ }, { fields: { 'status': 1 } });
