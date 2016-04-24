@@ -105,5 +105,5 @@ Meteor.publish("userInbox", function() {
 })
 
 Meteor.publish("userStatus", function() {
-  return Meteor.users.find({ }, { fields: { 'status': 1 } });
+  return Meteor.users.find({ }, { fields: { 'status': 1, 'username': 1, 'profile': 1 } });
 });
